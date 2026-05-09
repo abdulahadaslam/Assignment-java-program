@@ -1,0 +1,36 @@
+import java.util.Scanner;
+
+public class PartA {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int num = sc.nextInt();
+        int original = num;   
+
+
+        int[] digits = new int[32];
+        int pos = 0;
+
+        if (num == 0) {
+            System.out.println("Binary of 0 is: 0");
+            sc.close();
+            return;}
+
+        // Extracting each bit using division by 2
+        while (num > 0) {
+            digits[pos] = num % 2;
+            num = num / 2;
+
+            pos++;
+        }
+
+        System.out.print("Binary of " + original + " is: ");
+        for (int i = pos - 1; i >= 0; i--) {
+            System.out.print(digits[i]);
+
+        }
+        System.out.println();
+
+        sc.close();
+    }
+}
