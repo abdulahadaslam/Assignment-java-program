@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+public class PartB {
+
+
+    static int[] getBinaryDigits(int num) {
+        if (num == 0) {
+            return new int[]{0};
+        }
+
+        int[] temp = new int[32];
+        int pos = 0;
+
+        while (num > 0) {
+            temp[pos] = num % 2;
+            num = num / 2;
+            pos++;
+        }
+
+        // Reversing into a correctly-ordered array
+        int[] result = new int[pos];
+        for (int i = 0; i < pos; i++) {
+            result[i] = temp[pos - 1 - i];
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int num = sc.nextInt();
+
+        int[] binary = getBinaryDigits(num);
+
+        System.out.print("Binary of " + num + " is: ");
+        for (int i = 0; i < binary.length; i++) {
+            System.out.print(binary[i]);  }
+        System.out.println();
+
+        sc.close();
+    }
+}
