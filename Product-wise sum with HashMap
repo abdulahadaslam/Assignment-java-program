@@ -1,0 +1,44 @@
+
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class ProductWiseWithHashMap {
+    public static void main(String[] args) {
+        File f = new File("c:\\temp\\SalesEVESession.txt");
+        Scanner sc = null;
+        HashMap<String, Double> hm = new HashMap<>();
+
+        try {
+            sc = new Scanner(f);
+            if (sc.hasNextLine()) sc.nextLine(); 
+
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine().trim();
+                if (line.isEmpty()) continue;
+
+                String[] parts = line.split("\t");
+                String prod = parts[1];
+                double uPrice = Double.parseDouble(parts[2]);
+                double qty = Double.parseDouble(parts[3]);
+                double amt = uPrice * qty;
+
+                hm.put(prod, hm.getOrDefault(prod, 0.0) + amt);
+            }
+
+            System.out.println("Product-wise totals (with HashMap):");
+            for (Map.Entry<String, Double> e : hm.entrySet()) {
+                System.out.println(e.getKey() + " --- " + e.getValue());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + f.getPath());
+        } catch (Exception e) {
+            System.out.println("Some error happened: " + e.getMessage());
+        } finally {
+            if (sc != null) sc.close();
+        }
+    }
+}
