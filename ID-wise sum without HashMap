@@ -1,0 +1,52 @@
+
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class IDWiseNoHashMap {
+    public static void main(String[] args) {
+        File f = new File("c:\\temp\\SalesEVESession.txt");
+        Scanner sc = null;
+
+        ArrayList<String> ids = new ArrayList<>();
+        ArrayList<Double> totals = new ArrayList<>();
+
+        try {
+            sc = new Scanner(f);
+            if (sc.hasNextLine()) sc.nextLine(); 
+
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine().trim();
+                if (line.isEmpty()) continue;
+
+                String[] parts = line.split("\t");
+
+               String id = parts[0];
+                double uPrice = Double.parseDouble(parts[2]);
+                double qty = Double.parseDouble(parts[3]);
+                double amt = uPrice * qty;
+
+                int idx = ids.indexOf(id);
+                if (idx >= 0) {
+                    totals.set(idx, totals.get(idx) + amt);
+                } else {
+                    ids.add(id);
+                    totals.add(amt);
+                }
+            }
+
+            System.out.println("ID-wise totals (no HashMap):");
+            for (int i = 0; i < ids.size(); i++) {
+                System.out.println(ids.get(i) + " --- " + totals.get(i));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + f.getPath());
+        } catch (Exception e) {
+            System.out.println("Some error happened: " + e.getMessage());
+        } finally {
+            if (sc != null) sc.close();
+        }
+    }
+}
